@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ICP — Mon espace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:Inter,system-ui,sans-serif;background:#f6f6f7;color:#0b0b0d;}
+    a{text-decoration:none;color:inherit}
+
+    .dash-header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.82);backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(0,0,0,.07);
+      height:68px;display:flex;align-items:center;
+    }
+    .dash-header-inner{
+      width:min(1100px,100% - 36px);margin:0 auto;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+    }
+    .dash-logo img{height:38px;width:auto;border-radius:10px;}
+    .dash-user{display:flex;align-items:center;gap:12px;}
+    .dash-avatar{
+      width:38px;height:38px;border-radius:50%;
+      background:linear-gradient(135deg,#0b0b0d 0%,#444 100%);
+      display:grid;place-items:center;
+      color:#fff;font-size:14px;font-weight:900;letter-spacing:.02em;
+      flex-shrink:0;
+    }
+    .dash-user-name{font-size:13px;font-weight:700;color:#111;}
+    .dash-user-email{font-size:11px;color:rgba(0,0,0,.40);}
+    .btn-logout{
+      height:36px;padding:0 16px;border-radius:999px;
+      border:1px solid rgba(0,0,0,.12);background:#fff;
+      font:inherit;font-size:11px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;
+      color:rgba(0,0,0,.55);cursor:pointer;
+      transition:background .14s,border-color .14s;
+    }
+    .btn-logout:hover{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.20);}
+
+    .dash-main{
+      width:min(1100px,100% - 36px);margin:36px auto 60px;
+      display:grid;gap:24px;
+    }
+
+    .dash-welcome{
+      background:#fff;border-radius:20px;
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 10px 40px rgba(0,0,0,.07);
+      padding:32px 36px;
+      display:flex;align-items:center;justify-content:space-between;gap:24px;
+      flex-wrap:wrap;
+    }
+    .dash-welcome-text{}
+    .dash-welcome-eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:rgba(0,0,0,.36);margin-bottom:8px;}
+    .dash-welcome-title{font-size:28px;font-weight:900;letter-spacing:-.02em;line-height:1.1;margin-bottom:6px;}
+    .dash-welcome-sub{font-size:14px;color:rgba(0,0,0,.50);line-height:1.5;}
+    .dash-welcome-badge{
+      display:inline-flex;align-items:center;gap:7px;
+      padding:10px 18px;border-radius:999px;
+      background:#0b0b0d;color:#fff;
+      font-size:12px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;
+    }
+    .dash-welcome-badge-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;}
+
+    .dash-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+    .dash-card{
+      background:#fff;border-radius:18px;
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 6px 24px rgba(0,0,0,.06);
+      padding:24px;
+    }
+    .dash-card-icon{
+      width:44px;height:44px;border-radius:14px;
+      background:rgba(0,0,0,.04);
+      display:grid;place-items:center;margin-bottom:16px;
+    }
+    .dash-card-icon svg{width:20px;height:20px;color:#111;}
+    .dash-card-label{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(0,0,0,.38);margin-bottom:6px;}
+    .dash-card-value{font-size:22px;font-weight:900;letter-spacing:-.02em;color:#111;}
+    .dash-card-sub{font-size:12px;color:rgba(0,0,0,.40);margin-top:4px;}
+
+    .dash-profile{
+      background:#fff;border-radius:20px;
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 6px 24px rgba(0,0,0,.06);
+      padding:28px 32px;
+    }
+    .dash-section-title{font-size:13px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:rgba(0,0,0,.40);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(0,0,0,.06);}
+    .dash-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .dash-field label{display:block;font-size:11px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;color:rgba(0,0,0,.36);margin-bottom:7px;}
+    .dash-field input{
+      width:100%;padding:12px 14px;border-radius:12px;
+      border:1px solid rgba(0,0,0,.10);background:rgba(0,0,0,.02);
+      font:inherit;font-size:14px;color:#111;outline:none;
+      transition:border-color .14s,box-shadow .14s;
+    }
+    .dash-field input:focus{border-color:rgba(0,0,0,.24);box-shadow:0 0 0 3px rgba(0,0,0,.05);}
+    .dash-field input[readonly]{color:rgba(0,0,0,.45);cursor:default;}
+    .btn-save{
+      margin-top:20px;height:46px;padding:0 28px;border-radius:12px;border:none;
+      background:#0b0b0d;color:#fff;
+      font:inherit;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+      cursor:pointer;transition:background .14s,transform .14s;
+    }
+    .btn-save:hover{background:#222;transform:translateY(-1px);}
+
+    .dash-footer{text-align:center;font-size:11px;color:rgba(0,0,0,.30);padding-bottom:16px;}
+    .dash-footer a{color:rgba(0,0,0,.38);border-bottom:1px solid rgba(0,0,0,.12);}
+
+    @media(max-width:640px){
+      .dash-welcome{padding:22px 20px;}
+      .dash-welcome-title{font-size:22px;}
+      .dash-profile{padding:20px 18px;}
+      .dash-fields{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="dash-header">
+    <div class="dash-header-inner">
+      <a href="index.html" aria-label="Accueil ICP">
+        <div class="dash-logo">
+          <img src="assets/icp-logo.jpg" alt="ICP">
+        </div>
+      </a>
+      <div class="dash-user">
+        <div class="dash-avatar" id="user-avatar">?</div>
+        <div>
+          <div class="dash-user-name" id="user-name">Chargement...</div>
+          <div class="dash-user-email" id="user-email">—</div>
+        </div>
+        <button class="btn-logout" id="logout-btn">Déconnexion</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="dash-main">
+
+    <div class="dash-welcome">
+      <div class="dash-welcome-text">
+        <p class="dash-welcome-eyebrow">Espace membre</p>
+        <h1 class="dash-welcome-title" id="welcome-title">Bonjour 👋</h1>
+        <p class="dash-welcome-sub">Bienvenue dans votre espace ICP — I Can Play.</p>
+      </div>
+      <div class="dash-welcome-badge">
+        <span class="dash-welcome-badge-dot"></span>
+        Membre actif
+      </div>
+    </div>
+
+    <div class="dash-cards">
+      <div class="dash-card">
+        <div class="dash-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="dash-card-label">Statut</div>
+        <div class="dash-card-value">Membre</div>
+        <div class="dash-card-sub">Compte actif</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V21a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 1 4.18 2 2 0 0 1 3 2h4.09a2 2 0 0 1 2 1.72c.12.86.3 1.7.54 2.51a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l1.57-1.27a2 2 0 0 1 2.11-.45c.81.24 1.65.42 2.51.54A2 2 0 0 1 22 16.92Z"/></svg>
+        </div>
+        <div class="dash-card-label">Contact</div>
+        <div class="dash-card-value">ICP</div>
+        <div class="dash-card-sub"><a href="contact.html" style="color:rgba(0,0,0,.5);border-bottom:1px solid rgba(0,0,0,.12);">Nous contacter</a></div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l3 2"/></svg>
+        </div>
+        <div class="dash-card-label">Inscription</div>
+        <div class="dash-card-value" id="member-since">—</div>
+        <div class="dash-card-sub">Date de création</div>
+      </div>
+    </div>
+
+    <div class="dash-profile">
+      <p class="dash-section-title">Informations du compte</p>
+      <div class="dash-fields">
+        <div class="dash-field">
+          <label for="pf-firstname">Prénom</label>
+          <input type="text" id="pf-firstname" placeholder="Prénom" />
+        </div>
+        <div class="dash-field">
+          <label for="pf-lastname">Nom</label>
+          <input type="text" id="pf-lastname" placeholder="Nom" />
+        </div>
+        <div class="dash-field" style="grid-column:1/-1">
+          <label for="pf-email">Email</label>
+          <input type="email" id="pf-email" readonly />
+        </div>
+      </div>
+      <button class="btn-save" id="save-btn">Enregistrer</button>
+      <div id="save-msg" style="margin-top:12px;font-size:13px;color:#4ade80;display:none;">✅ Profil mis à jour !</div>
+    </div>
+
+  </main>
+
+  <div class="dash-footer">
+    © <span id="year"></span> ICP — I Can Play &nbsp;·&nbsp;
+    <a href="mentions-legales.html">Mentions légales</a> &nbsp;·&nbsp;
+    <a href="rgpd.html">RGPD</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+  (function(){
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const { createClient } = supabase;
+    let sb;
+    try { sb = createClient(window.__SUPABASE_URL, window.__SUPABASE_ANON_KEY); } catch(e) {}
+
+    if (!sb) {
+      document.getElementById('user-name').textContent = 'Mode démo';
+      document.getElementById('user-email').textContent = 'Supabase non configuré';
+      document.getElementById('user-avatar').textContent = 'D';
+      document.getElementById('welcome-title').textContent = 'Bonjour 👋';
+      return;
+    }
+
+    // Guard : redirect if not logged in
+    sb.auth.getSession().then(({ data }) => {
+      if (!data?.session) { window.location.href = 'login.html'; return; }
+      const user = data.session.user;
+      const meta = user.user_metadata || {};
+      const name = meta.full_name || meta.name || (meta.first_name ? meta.first_name + ' ' + (meta.last_name||'') : null) || user.email.split('@')[0];
+      const initials = name.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
+
+      document.getElementById('user-avatar').textContent = initials;
+      document.getElementById('user-name').textContent = name;
+      document.getElementById('user-email').textContent = user.email;
+      document.getElementById('welcome-title').textContent = 'Bonjour, ' + (meta.first_name || name.split(' ')[0]) + ' 👋';
+      document.getElementById('pf-email').value = user.email;
+      document.getElementById('pf-firstname').value = meta.first_name || '';
+      document.getElementById('pf-lastname').value  = meta.last_name  || '';
+
+      const d = new Date(user.created_at);
+      document.getElementById('member-since').textContent = d.toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'});
+    });
+
+    // Logout
+    document.getElementById('logout-btn')?.addEventListener('click', async () => {
+      await sb.auth.signOut();
+      window.location.href = 'index.html';
+    });
+
+    // Save profile
+    document.getElementById('save-btn')?.addEventListener('click', async () => {
+      const firstname = document.getElementById('pf-firstname').value.trim();
+      const lastname  = document.getElementById('pf-lastname').value.trim();
+      const { error } = await sb.auth.updateUser({
+        data: { first_name: firstname, last_name: lastname, full_name: firstname + ' ' + lastname }
+      });
+      const msg = document.getElementById('save-msg');
+      msg.style.display = 'block';
+      if (error) { msg.style.color='#f87171'; msg.textContent = '❌ ' + error.message; }
+      else { msg.style.color='#4ade80'; msg.textContent = '✅ Profil mis à jour !'; }
+      setTimeout(() => msg.style.display = 'none', 3000);
+    });
+  })();
+  </script>
+</body>
+</html>

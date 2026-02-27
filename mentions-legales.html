@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ICP — Mentions légales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .legal-wrap { padding: 28px 0 60px; }
+    .legal-card {
+      width: min(820px, calc(100% - 40px));
+      margin: 0 auto;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 18px 60px rgba(0,0,0,.08);
+      border: 1px solid rgba(0,0,0,.06);
+      overflow: hidden;
+    }
+    .legal-header {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 0 24px;
+      background: rgba(255,255,255,.95);
+      border-bottom: 1px solid rgba(0,0,0,.08);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+    }
+    .legal-logo { height: 36px; width: auto; border-radius: 10px; }
+    .legal-back {
+      margin-left: auto;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,.55);
+      text-decoration: none;
+      border: 1px solid rgba(0,0,0,.12);
+      padding: 8px 14px;
+      border-radius: 999px;
+      transition: background .14s;
+    }
+    .legal-back:hover { background: rgba(0,0,0,.04); }
+    .legal-body {
+      padding: 40px 40px 48px;
+    }
+    .legal-eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,.38);
+      margin: 0 0 10px;
+    }
+    .legal-title {
+      margin: 0 0 32px;
+      font-weight: 900;
+      font-size: 28px;
+      letter-spacing: -.02em;
+      color: #0b0b0b;
+    }
+    .legal-section { margin-bottom: 28px; }
+    .legal-section h2 {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,.50);
+      margin: 0 0 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(0,0,0,.08);
+    }
+    .legal-section p, .legal-section address {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(0,0,0,.68);
+      font-style: normal;
+      margin: 0;
+    }
+    .legal-section a { color: #111; font-weight: 600; }
+    .legal-footer {
+      background: rgba(0,0,0,.02);
+      border-top: 1px solid rgba(0,0,0,.06);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      color: rgba(0,0,0,.38);
+    }
+    .legal-footer a { color: rgba(0,0,0,.45); text-decoration: none; }
+    .legal-footer a:hover { color: #111; }
+    @media (max-width: 600px) {
+      .legal-body { padding: 24px 20px 36px; }
+      .legal-card { width: calc(100% - 20px); }
+      .legal-footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body style="background:#f6f6f7; margin:0; font-family:Inter,system-ui,sans-serif;">
+  <main class="legal-wrap">
+    <div class="legal-card">
+
+      <header class="legal-header">
+        <a href="index.html" aria-label="Accueil ICP">
+          <img src="assets/icp-logo.jpg" alt="ICP" class="legal-logo">
+        </a>
+        <a class="legal-back" href="javascript:history.back()">← Retour</a>
+      </header>
+
+      <div class="legal-body">
+        <p class="legal-eyebrow">Informations légales</p>
+        <h1 class="legal-title">Mentions légales</h1>
+
+        <div class="legal-section">
+          <h2>Éditeur du site</h2>
+          <address>
+            <strong>ICP — I Can Play</strong><br/>
+            Média & agence créative sportive<br/>
+            France<br/>
+            Email : <a href="mailto:contact@icanplayfr.com">contact@icanplayfr.com</a>
+          </address>
+        </div>
+
+        <div class="legal-section">
+          <h2>Directeur de la publication</h2>
+          <p>Le directeur de la publication est le représentant légal de la société ICP — I Can Play.</p>
+        </div>
+
+        <div class="legal-section">
+          <h2>Hébergement</h2>
+          <p>
+            Ce site est hébergé par <strong>Vercel Inc.</strong><br/>
+            440 N Barranca Ave #4133, Covina, CA 91723, États-Unis<br/>
+            <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a>
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>Propriété intellectuelle</h2>
+          <p>
+            L'ensemble des contenus présents sur ce site (textes, images, vidéos, logos) sont la propriété exclusive d'ICP — I Can Play, sauf mention contraire. Toute reproduction, représentation ou diffusion, en tout ou partie, est interdite sans autorisation préalable écrite.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>Limitation de responsabilité</h2>
+          <p>
+            ICP — I Can Play s'efforce de maintenir les informations de ce site à jour. Toutefois, ICP ne peut garantir l'exactitude, la complétude ou l'actualité des informations diffusées. L'utilisation des informations est sous la seule responsabilité de l'utilisateur.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2>Contact</h2>
+          <p>Pour toute question relative aux présentes mentions légales : <a href="mailto:contact@icanplayfr.com">contact@icanplayfr.com</a></p>
+        </div>
+      </div>
+
+      <footer class="legal-footer">
+        <span>© <script>document.write(new Date().getFullYear())</script> ICP — I Can Play</span>
+        <div style="display:flex;gap:14px;">
+          <a href="mentions-legales.html">Mentions légales</a>
+          <span>·</span>
+          <a href="rgpd.html">RGPD</a>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+</body>
+</html>

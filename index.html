@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>ICP — I Can Play</title>
+  <meta name="description" content="ICP — Media & creative platform driven by sport, culture and community." />
+
+  <style>
+    :root{
+      --bg:#f6f6f7;
+      --card:#ffffff;
+      --text:#0b0b0d;
+      --muted:rgba(11,11,13,.64);
+      --line:rgba(11,11,13,.10);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.10);
+      --shadow2: 0 10px 30px rgba(0,0,0,.08);
+
+      --radius: 24px;
+      --radius2: 18px;
+
+      --max: 1100px;
+
+      --cta-dark:#0b0b0d;
+      --cta-light:#ffffff;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      color:var(--text);
+      background:var(--bg);
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+    .top-space{height:16px}
+
+    /* HEADER */
+    .header{
+      position:sticky; top:0; z-index:50;
+      background:rgba(255,255,255,.72);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .header__inner{
+      display:flex; align-items:center; justify-content:space-between;
+      height:74px;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      min-width:160px;
+    }
+    .brand__logo{
+      width:44px; height:44px;
+      border-radius:14px;
+      background: transparent;
+      box-shadow: none;
+      display:grid; place-items:center;
+      overflow:hidden;
+      border: none;
+    }
+    .brand__logo img{width:40px; height:auto}
+    .nav{
+      display:flex; align-items:center; justify-content:center;
+      gap:44px;
+      flex:1;
+    }
+    .nav a{
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:rgba(11,11,13,.72);
+      padding:10px 6px;
+      position:relative;
+    }
+    .nav a::after{
+      content:"";
+      position:absolute;
+      left:50%; bottom:4px;
+      width:0; height:1px;
+      background:rgba(11,11,13,.55);
+      transform:translateX(-50%);
+      transition:width .18s ease;
+    }
+    .nav a:hover{color:rgba(11,11,13,.92)}
+    .nav a:hover::after{width:70%}
+
+    .header__right{
+      display:flex; align-items:center; justify-content:flex-end;
+      gap:10px;
+      min-width:160px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      border-radius:999px;
+      border:1px solid rgba(11,11,13,.14);
+      padding:10px 16px;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      background:rgba(255,255,255,.75);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+      box-shadow: 0 10px 26px rgba(0,0,0,.08);
+      white-space:nowrap;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 14px 34px rgba(0,0,0,.10);
+      border-color: rgba(11,11,13,.22);
+      background:#fff;
+    }
+    .btn:focus{outline:3px solid rgba(0,0,0,.12); outline-offset:3px}
+
+    .btn--dark{
+      background:rgba(11,11,13,.92);
+      color:#fff;
+      border-color: rgba(255,255,255,.18);
+    }
+    .btn--dark:hover{
+      background:#0b0b0d;
+      border-color: rgba(255,255,255,.28);
+    }
+
+    /* MOBILE NAV */
+    .burger{
+      display:none;
+      width:42px; height:42px;
+      border-radius:14px;
+      border:1px solid rgba(11,11,13,.12);
+      background:rgba(255,255,255,.75);
+      box-shadow: 0 10px 26px rgba(0,0,0,.08);
+      align-items:center; justify-content:center;
+      cursor:pointer;
+    }
+    .burger span{
+      width:18px; height:2px; background:rgba(11,11,13,.75);
+      position:relative; display:block;
+    }
+    .burger span::before,.burger span::after{
+      content:""; position:absolute; left:0;
+      width:18px; height:2px; background:rgba(11,11,13,.75);
+    }
+    .burger span::before{top:-6px}
+    .burger span::after{top:6px}
+
+    .mobilePanel{
+      display:none;
+      padding:12px 18px 18px;
+      border-top:1px solid var(--line);
+      background:rgba(255,255,255,.86);
+      backdrop-filter: blur(10px);
+    }
+    .mobilePanel a{
+      display:flex;
+      padding:12px 10px;
+      border-radius:14px;
+      border:1px solid rgba(11,11,13,.10);
+      background:#fff;
+      margin-top:10px;
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:rgba(11,11,13,.78);
+    }
+
+    /* HERO CARD */
+    .heroCard{
+      margin:18px auto 18px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,.05);
+    }
+
+    .hero{
+      position:relative;
+      min-height: 520px;
+      background:#000;
+      border-radius: calc(var(--radius) - 2px);
+      overflow:hidden;
+    }
+
+    .hero video{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      transform: scale(1.02);
+      filter: saturate(1.05) contrast(1.02);
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute; inset:0;
+      background: radial-gradient(70% 70% at 50% 35%, rgba(0,0,0,.28), rgba(0,0,0,.66));
+    }
+
+    .hero__content{
+      position:relative;
+      z-index:2;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:64px 18px;
+    }
+
+    .hero__content h1{
+      margin:0;
+      font-weight:900;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      line-height:0.95;
+      font-size: clamp(34px, 5.2vw, 64px);
+      color:#fff;
+      text-shadow: 0 16px 40px rgba(0,0,0,.35);
+    }
+
+    .hero__content p{
+      margin:16px auto 0;
+      max-width: 620px;
+      font-size: 14px;
+      color: rgba(255,255,255,.80);
+    }
+
+    .hero__cta{
+      margin-top:18px;
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .hero__cta .btn{
+      padding:12px 18px;
+      border-color: rgba(255,255,255,.20);
+      background: rgba(255,255,255,.10);
+      color:#fff;
+      box-shadow: 0 16px 44px rgba(0,0,0,.18);
+    }
+    .hero__cta .btn:hover{
+      background: rgba(255,255,255,.14);
+      border-color: rgba(255,255,255,.30);
+    }
+    .hero__cta .btn--light{
+      background: rgba(255,255,255,.92);
+      color:#0b0b0d;
+      border-color: rgba(255,255,255,.92);
+      box-shadow: 0 18px 50px rgba(0,0,0,.20);
+    }
+    .hero__cta .btn--light:hover{
+      background:#fff;
+    }
+
+    /* TRUST */
+    .trust{
+      background: rgba(255,255,255,.86);
+      border-top:1px solid rgba(0,0,0,.06);
+      padding:18px 18px 22px;
+    }
+    .trust__title{
+      text-align:center;
+      font-size:11px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color: rgba(11,11,13,.60);
+      margin:0 0 14px;
+    }
+    .trust__row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .trust__logo{
+      height:28px;
+      width:auto;
+      opacity:.92;
+      filter: grayscale(1) brightness(0);
+    }
+    /* LFB est en format portrait — on fixe la largeur plutôt que la hauteur */
+    .trust__chip[title="LFB"] .trust__logo {
+      height: 38px;
+      width: auto;
+    }
+    /* Header logo : fond transparent */
+    .brand__logo{
+      width:44px; height:44px;
+      border-radius:14px;
+      background: transparent;
+      box-shadow: none;
+      display:grid; place-items:center;
+      overflow:hidden;
+      border: none;
+    }
+    .trust__chip{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:10px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.9);
+      border:1px solid rgba(0,0,0,.08);
+      box-shadow: var(--shadow2);
+      flex: 1 1 120px;
+      min-width: 120px;
+    }
+
+    /* FOOTER */
+    footer{
+      padding:22px 0 30px;
+      color:rgba(11,11,13,.60);
+      font-size:12px;
+    }
+    .footerRow{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+    }
+    .backTop{
+      color:rgba(11,11,13,.60);
+      text-decoration:underline;
+      text-underline-offset: 3px;
+    }
+
+    .trust__wordmark{
+      font-size:15px;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:#111;
+      filter: opacity(.88);
+    }
+    .footerLinks{
+      display:flex; align-items:center; gap:8px;
+    }
+    .footerLinks a{
+      color:rgba(11,11,13,.55);
+      font-size:11px;
+      text-decoration:none;
+      letter-spacing:.04em;
+    }
+    .footerLinks a:hover{ color:rgba(11,11,13,.85); text-decoration:underline; }
+    .footerSep{ color:rgba(11,11,13,.28); font-size:11px; }
+    @media(max-width:520px){
+      .footerRow{ flex-direction:column; align-items:flex-start; gap:8px; }
+      .footerLinks{ flex-wrap:wrap; }
+    }
+
+    /* Responsive */
+    @media (max-width: 860px){
+      .nav{display:none}
+      .burger{display:flex}
+      .header__right{min-width:auto}
+      .brand{min-width:auto}
+    }
+    @media (max-width: 640px){
+      .hero{min-height: 520px}
+      .hero__content{padding:56px 16px}
+      .trust__row{gap:10px}
+      .trust__chip{min-width: 140px}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="wrap header__inner">
+      <a class="brand" href="index.html" aria-label="ICP - Accueil">
+        <span class="brand__logo">
+          <img src="assets/icp-logo.jpg" alt="ICP logo" />
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Navigation principale">
+        <a href="about.html">About</a>
+        <a href="projects.html">Nos projets</a>
+        <a href="contact.html">Nous contacter</a>
+      </nav>
+
+      <div class="header__right">
+        <a class="btn btn--dark" href="login.html">Login</a>
+        <button class="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" id="burgerBtn">
+          <span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Panel -->
+    <div class="mobilePanel" id="mobilePanel">
+      <div class="wrap">
+        <a href="about.html">About</a>
+        <a href="projects.html">Nos projets</a>
+        <a href="contact.html">Nous contacter</a>
+        <a href="login.html">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="top-space"></div>
+
+  <!-- HERO + TRUST CARD -->
+  <main class="wrap">
+    <section class="heroCard">
+      <div class="hero" aria-label="Hero ICP">
+        <video autoplay muted loop playsinline poster="assets/queenside-poster.jpg">
+          <source src="assets/ICP-teaser.mp4" type="video/mp4" />
+        </video>
+
+        <div class="hero__content">
+          <div>
+            <h1>BORN IN BASKETBALL,<br/>POWERED BY EVERY SPORT</h1>
+            <p>Media & creative platform driven by sport, culture and community.</p>
+
+            <div class="hero__cta">
+              <a class="btn" href="projects.html">Découvrir ICP</a>
+              <a class="btn btn--light" href="contact.html">Travailler avec ICP</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust">
+        <p class="trust__title">Ils nous ont fait confiance</p>
+
+        <div class="trust__row">
+          <div class="trust__chip" title="G-SHOCK">
+            <img class="trust__logo" src="assets/gshock.png" alt="G-SHOCK" />
+          </div>
+          <div class="trust__chip" title="Jordan">
+            <img class="trust__logo" src="assets/jordan.svg" alt="Jordan" />
+          </div>
+          <div class="trust__chip" title="adidas">
+            <img class="trust__logo" src="assets/adidas.png" alt="adidas" />
+          </div>
+          <div class="trust__chip" title="Foot Locker">
+            <img class="trust__logo" src="assets/footlocker.png" alt="Foot Locker" />
+          </div>
+          <div class="trust__chip" title="LFB">
+            <img class="trust__logo" src="assets/lfb.png" alt="Ligue Féminine de Basketball" />
+          </div>
+          <div class="trust__chip" title="MGEN">
+            <img class="trust__logo" src="assets/mgen.png" alt="MGEN" />
+          </div>
+          <div class="trust__chip" title="Puma">
+            <img class="trust__logo" src="assets/puma.png" alt="Puma" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footerRow">
+        <div>© <span id="footerYear"></span> ICP — I Can Play</div>
+        <div class="footerLinks">
+          <a href="mentions-legales.html">Mentions légales</a>
+          <span class="footerSep">·</span>
+          <a href="rgpd.html">RGPD</a>
+          <span class="footerSep">·</span>
+          <a class="backTop" href="#top" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">Retour en haut</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Mobile menu toggle
+    const burger = document.getElementById('burgerBtn');
+    const panel = document.getElementById('mobilePanel');
+
+    burger?.addEventListener('click', () => {
+      const open = panel.style.display === 'block';
+      panel.style.display = open ? 'none' : 'block';
+      burger.setAttribute('aria-expanded', String(!open));
+    });
+    // Footer year
+    const fy = document.getElementById('footerYear');
+    if(fy) fy.textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
