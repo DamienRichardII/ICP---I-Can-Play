@@ -412,8 +412,8 @@
   <main class="wrap">
     <section class="heroCard">
       <div class="hero" aria-label="Hero ICP">
-        <video autoplay muted loop playsinline poster="assets/queenside-poster.jpg">
-          <source src="assets/ICP-teaser.mp4" type="video/mp4" />
+        <video autoplay muted playsinline poster="assets/queenside-poster.jpg" id="heroVideo">
+          <source src="https://res.cloudinary.com/df1w9551f/video/upload/v1772187008/ICP-teaser_hleo0m.mp4" type="video/mp4" />
         </video>
 
         <div class="hero__content">
@@ -485,6 +485,18 @@
     // Footer year
     const fy = document.getElementById('footerYear');
     if(fy) fy.textContent = new Date().getFullYear();
+
+    // Video : jouer uniquement les 20 premières secondes en boucle
+    const heroVideo = document.getElementById('heroVideo');
+    const CLIP_END = 20; // secondes
+    if (heroVideo) {
+      heroVideo.addEventListener('timeupdate', () => {
+        if (heroVideo.currentTime >= CLIP_END) {
+          heroVideo.currentTime = 0;
+          heroVideo.play();
+        }
+      });
+    }
   </script>
 </body>
 </html>
