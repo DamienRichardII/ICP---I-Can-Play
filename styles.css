@@ -474,6 +474,15 @@ a{ color: inherit; }
   gap: 12px;
   align-items:flex-start;
   box-shadow: 0 14px 42px rgba(0,0,0,.06);
+  height: 100%;
+  min-height: 90px;
+}
+
+.mini-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: stretch;
 }
 
 .mini-ico{
@@ -523,12 +532,13 @@ a{ color: inherit; }
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   border-radius: 18px;
-  overflow:hidden;
 }
 .strip img{
   width:100%;
-  height: 220px;
+  height: auto;
+  max-height: 300px;
   object-fit: cover;
+  border-radius: 14px;
   display:block;
 }
 
@@ -1866,9 +1876,9 @@ input:focus, textarea:focus{ border-color: rgba(0,0,0,.28); }
   .contact-bottom-inner{ grid-template-columns: 1fr; }
 }
 
-@media (max-width: 900px){
+@media (max-width: 900px) {
   .about-nav{ display:none; }
-  .about-cta{ display:none; }
+  .about-cta{ display:inline-flex; }
   .burger{ display:inline-flex; align-items:center; justify-content:center; margin-left:auto; }
   .mobile-drawer{ display:block; }
   .mobile-drawer[aria-hidden="true"]{ display:none; }
@@ -2054,7 +2064,8 @@ input:focus, textarea:focus{ border-color: rgba(0,0,0,.28); }
 /* Vision grid: stack on phones */
 @media (max-width: 700px) {
   .vision-grid { grid-template-columns: 1fr !important; }
-  .vision-media { display: none; }
+  .vision-media { display: block; }
+  .vision-media img { width: 100%; height: 220px; object-fit: cover; border-radius: 14px; }
 }
 
 /* Projects hero: tighter on phones */
@@ -2181,4 +2192,49 @@ input:focus, textarea:focus{ border-color: rgba(0,0,0,.28); }
   text-transform: uppercase;
   color: #111;
   opacity: .80;
+}
+
+/* ========================================
+   ADDITIONS — v9 2026
+======================================== */
+
+/* Contact page — signup CTA block */
+.contact-signup-cta {
+  margin-top: 28px;
+  padding: 24px 20px;
+  border-radius: 18px;
+  background: #0b0b0d;
+  border: 1px solid rgba(255,255,255,.06);
+  text-align: center;
+}
+.contact-signup-tagline {
+  margin: 0 0 16px;
+  font-family: Inter, system-ui, sans-serif;
+  font-weight: 900;
+  font-size: clamp(17px, 2.2vw, 22px);
+  letter-spacing: -.01em;
+  line-height: 1.2;
+  color: #fff;
+  text-transform: uppercase;
+}
+.contact-signup-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 22px;
+  border-radius: 999px;
+  background: #fff;
+  color: #0b0b0d;
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background .14s, transform .14s, box-shadow .14s;
+  box-shadow: 0 10px 30px rgba(0,0,0,.3);
+}
+.contact-signup-btn:hover {
+  background: #f0f0f0;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 40px rgba(0,0,0,.4);
 }

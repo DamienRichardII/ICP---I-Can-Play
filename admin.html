@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ICP — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:Inter,system-ui,sans-serif;background:#f4f4f5;color:#0b0b0d;}
+    a{text-decoration:none;color:inherit}
+
+    .admin-header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.90);backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(0,0,0,.08);
+      height:64px;display:flex;align-items:center;
+    }
+    .admin-header-inner{
+      width:min(1200px,100% - 36px);margin:0 auto;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+    }
+    .admin-brand{display:flex;align-items:center;gap:12px;}
+    .admin-brand img{height:36px;width:auto;border-radius:10px;}
+    .admin-badge{
+      padding:4px 10px;border-radius:999px;
+      background:#0b0b0d;color:#fff;
+      font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;
+    }
+    .btn-logout{
+      height:34px;padding:0 16px;border-radius:999px;
+      border:1px solid rgba(0,0,0,.12);background:#fff;
+      font:inherit;font-size:11px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;
+      color:rgba(0,0,0,.55);cursor:pointer;
+      transition:background .14s;
+    }
+    .btn-logout:hover{background:rgba(0,0,0,.04);}
+
+    .admin-main{
+      width:min(1200px,100% - 36px);margin:32px auto 60px;
+      display:grid;gap:24px;
+    }
+
+    .admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
+    .stat-card{
+      background:#fff;border-radius:16px;
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 4px 20px rgba(0,0,0,.05);
+      padding:20px;
+    }
+    .stat-label{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(0,0,0,.38);margin-bottom:8px;}
+    .stat-value{font-size:28px;font-weight:900;letter-spacing:-.02em;}
+    .stat-sub{font-size:12px;color:rgba(0,0,0,.38);margin-top:4px;}
+
+    .admin-panel{
+      background:#fff;border-radius:18px;
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 4px 20px rgba(0,0,0,.05);
+      overflow:hidden;
+    }
+    .panel-head{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:18px 24px;border-bottom:1px solid rgba(0,0,0,.06);
+      flex-wrap:wrap;gap:12px;
+    }
+    .panel-title{font-size:13px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;color:rgba(0,0,0,.55);}
+    .panel-actions{display:flex;gap:10px;align-items:center;}
+    .btn-export{
+      height:34px;padding:0 14px;border-radius:999px;
+      border:1px solid rgba(0,0,0,.12);background:#fff;
+      font:inherit;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+      cursor:pointer;display:flex;align-items:center;gap:6px;
+      transition:background .14s;
+    }
+    .btn-export:hover{background:rgba(0,0,0,.04);}
+
+    .search-input{
+      height:34px;padding:0 14px;border-radius:999px;
+      border:1px solid rgba(0,0,0,.12);background:#f8f8f8;
+      font:inherit;font-size:13px;color:#111;outline:none;
+      width:220px;
+      transition:border-color .14s,width .2s;
+    }
+    .search-input:focus{border-color:rgba(0,0,0,.24);width:260px;}
+    .search-input::placeholder{color:rgba(0,0,0,.32);}
+
+    table{width:100%;border-collapse:collapse;}
+    thead tr{background:rgba(0,0,0,.02);}
+    th{
+      padding:11px 16px;text-align:left;
+      font-size:11px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;
+      color:rgba(0,0,0,.40);border-bottom:1px solid rgba(0,0,0,.06);
+    }
+    td{
+      padding:13px 16px;
+      font-size:13px;color:#111;
+      border-bottom:1px solid rgba(0,0,0,.04);
+      vertical-align:middle;
+    }
+    tr:last-child td{border-bottom:none;}
+    tr:hover td{background:rgba(0,0,0,.02);}
+
+    .user-cell{display:flex;align-items:center;gap:10px;}
+    .user-av{
+      width:32px;height:32px;border-radius:50%;
+      background:linear-gradient(135deg,#0b0b0d,#444);
+      display:grid;place-items:center;
+      color:#fff;font-size:12px;font-weight:900;flex-shrink:0;
+    }
+    .user-name{font-weight:700;}
+    .user-email{font-size:11px;color:rgba(0,0,0,.40);}
+
+    .badge{
+      display:inline-flex;align-items:center;gap:4px;
+      padding:3px 10px;border-radius:999px;
+      font-size:11px;font-weight:800;letter-spacing:.06em;
+    }
+    .badge-active{background:rgba(74,222,128,.12);color:#16a34a;}
+    .badge-pending{background:rgba(251,191,36,.12);color:#b45309;}
+    .badge-dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+
+    .provider-cell{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(0,0,0,.55);font-weight:600;}
+
+    .empty-state{
+      padding:48px 24px;text-align:center;
+      color:rgba(0,0,0,.35);font-size:14px;font-weight:600;
+    }
+    .empty-icon{font-size:32px;margin-bottom:10px;}
+
+    .loading-row td{text-align:center;padding:32px;color:rgba(0,0,0,.38);font-size:13px;font-weight:600;}
+
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .spinner{
+      width:16px;height:16px;border-radius:50%;
+      border:2px solid rgba(0,0,0,.12);border-top-color:#111;
+      animation:spin .7s linear infinite;
+      display:inline-block;margin-right:8px;vertical-align:middle;
+    }
+
+    @media(max-width:640px){
+      .admin-stats{grid-template-columns:1fr 1fr;}
+      .search-input{width:140px;}
+      .search-input:focus{width:160px;}
+      th:nth-child(4),td:nth-child(4){display:none;}
+    }
+    @media(max-width:420px){
+      th:nth-child(3),td:nth-child(3){display:none;}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="admin-header">
+    <div class="admin-header-inner">
+      <div class="admin-brand">
+        <a href="index.html"><img src="assets/icp-logo.jpg" alt="ICP"></a>
+        <span class="admin-badge">Admin</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span id="admin-email" style="font-size:12px;color:rgba(0,0,0,.40);font-weight:600;"></span>
+        <button class="btn-logout" id="logout-btn">Déconnexion</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-main">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <div>
+        <h1 style="font-size:22px;font-weight:900;letter-spacing:-.02em;margin-bottom:4px;">Tableau de bord</h1>
+        <p style="font-size:13px;color:rgba(0,0,0,.45);font-weight:500;">Gestion des membres ICP</p>
+      </div>
+      <button class="btn-export" id="refresh-btn">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M14 8A6 6 0 1 1 8 2"/><path d="M14 2v4h-4"/></svg>
+        Actualiser
+      </button>
+    </div>
+
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div class="stat-label">Total membres</div>
+        <div class="stat-value" id="stat-total">—</div>
+        <div class="stat-sub">Comptes créés</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Confirmés</div>
+        <div class="stat-value" id="stat-confirmed">—</div>
+        <div class="stat-sub">Email vérifié</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">En attente</div>
+        <div class="stat-value" id="stat-pending">—</div>
+        <div class="stat-sub">Non confirmés</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Ce mois</div>
+        <div class="stat-value" id="stat-month">—</div>
+        <div class="stat-sub">Nouvelles inscriptions</div>
+      </div>
+    </div>
+
+    <div class="admin-panel">
+      <div class="panel-head">
+        <span class="panel-title">Membres inscrits</span>
+        <div class="panel-actions">
+          <input class="search-input" type="text" id="search" placeholder="Rechercher..." />
+          <button class="btn-export" id="export-btn">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M8 2v9M4 7l4 4 4-4"/><rect x="2" y="12" width="12" height="2" rx="1"/></svg>
+            Exporter CSV
+          </button>
+        </div>
+      </div>
+
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Membre</th>
+              <th>Statut</th>
+              <th>Connexion via</th>
+              <th>Inscription</th>
+              <th>Dernière connexion</th>
+            </tr>
+          </thead>
+          <tbody id="users-table">
+            <tr class="loading-row">
+              <td colspan="5"><span class="spinner"></span>Chargement...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+  (function(){
+    const { createClient } = supabase;
+    let sb;
+    try { sb = createClient(window.__SUPABASE_URL, window.__SUPABASE_ANON_KEY); } catch(e) {}
+
+    // ── Guard: admin only ────────────────────────────────────
+    const ADMIN_EMAILS = ['contact@icanplayfr.com']; // ← ajoute les emails admin ici
+
+    async function checkAdmin() {
+      if (!sb) { showDemo(); return; }
+      const { data } = await sb.auth.getSession();
+      if (!data?.session) { window.location.href = 'login.html'; return; }
+      const email = data.session.user.email;
+      if (!ADMIN_EMAILS.includes(email)) {
+        document.body.innerHTML = '<div style="display:grid;place-items:center;height:100vh;font-family:Inter,sans-serif;text-align:center;"><div><p style="font-size:32px;margin-bottom:16px;">🔒</p><p style="font-weight:900;font-size:18px;">Accès refusé</p><p style="color:rgba(0,0,0,.45);margin-top:8px;font-size:14px;">Ce tableau de bord est réservé aux administrateurs.</p><a href="index.html" style="display:inline-block;margin-top:24px;padding:12px 24px;background:#0b0b0d;color:#fff;border-radius:999px;font-weight:900;font-size:12px;letter-spacing:.10em;text-transform:uppercase;text-decoration:none;">Retour accueil</a></div></div>';
+        return;
+      }
+      document.getElementById('admin-email').textContent = email;
+      loadUsers();
+    }
+
+    // ── Load users from Supabase Auth ────────────────────────
+    // Note: listUsers requiert le service_role key (backend sécurisé)
+    // Pour un front-end statique, on utilise une table publique "profiles"
+    // créée automatiquement via trigger Supabase
+    async function loadUsers() {
+      if (!sb) { showDemo(); return; }
+      const { data, error } = await sb.from('profiles').select('*').order('created_at', { ascending: false });
+      if (error) {
+        // Si la table profiles n'existe pas encore, afficher démo
+        console.warn('Table profiles introuvable:', error.message);
+        showDemo();
+        return;
+      }
+      renderUsers(data || []);
+    }
+
+    function renderUsers(users) {
+      const now = new Date();
+      const thisMonth = now.getMonth();
+      const thisYear = now.getFullYear();
+
+      const confirmed = users.filter(u => u.email_confirmed_at).length;
+      const pending = users.length - confirmed;
+      const monthly = users.filter(u => {
+        const d = new Date(u.created_at);
+        return d.getMonth() === thisMonth && d.getFullYear() === thisYear;
+      }).length;
+
+      document.getElementById('stat-total').textContent = users.length;
+      document.getElementById('stat-confirmed').textContent = confirmed;
+      document.getElementById('stat-pending').textContent = pending;
+      document.getElementById('stat-month').textContent = monthly;
+
+      window._allUsers = users;
+      renderTable(users);
+    }
+
+    function renderTable(users) {
+      const tbody = document.getElementById('users-table');
+      if (!users.length) {
+        tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-icon">👥</div>Aucun membre inscrit pour le moment.</div></td></tr>';
+        return;
+      }
+      tbody.innerHTML = users.map(u => {
+        const name = u.full_name || u.first_name || '—';
+        const email = u.email || '—';
+        const initials = name !== '—' ? name.split(' ').map(p=>p[0]||'').join('').slice(0,2).toUpperCase() : email[0].toUpperCase();
+        const confirmed = u.email_confirmed_at;
+        const provider = u.provider || 'email';
+        const providerIcon = provider === 'google' ? '🔵 Google' : provider === 'apple' ? '⚫ Apple' : '✉️ Email';
+        const created = u.created_at ? new Date(u.created_at).toLocaleDateString('fr-FR', {day:'numeric',month:'short',year:'numeric'}) : '—';
+        const lastSeen = u.last_sign_in_at ? new Date(u.last_sign_in_at).toLocaleDateString('fr-FR', {day:'numeric',month:'short',year:'numeric'}) : '—';
+        return `
+          <tr>
+            <td>
+              <div class="user-cell">
+                <div class="user-av">${initials}</div>
+                <div>
+                  <div class="user-name">${name}</div>
+                  <div class="user-email">${email}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="badge ${confirmed ? 'badge-active' : 'badge-pending'}">
+                <span class="badge-dot"></span>
+                ${confirmed ? 'Confirmé' : 'En attente'}
+              </span>
+            </td>
+            <td><div class="provider-cell">${providerIcon}</div></td>
+            <td>${created}</td>
+            <td>${lastSeen}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    // ── Search ────────────────────────────────────────────────
+    document.getElementById('search')?.addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      const filtered = (window._allUsers || []).filter(u =>
+        (u.full_name || '').toLowerCase().includes(q) ||
+        (u.email || '').toLowerCase().includes(q)
+      );
+      renderTable(filtered);
+    });
+
+    // ── Export CSV ────────────────────────────────────────────
+    document.getElementById('export-btn')?.addEventListener('click', () => {
+      const users = window._allUsers || [];
+      if (!users.length) { alert('Aucune donnée à exporter.'); return; }
+      const headers = ['Nom','Email','Statut','Provider','Inscription'];
+      const rows = users.map(u => [
+        u.full_name || '',
+        u.email || '',
+        u.email_confirmed_at ? 'Confirmé' : 'En attente',
+        u.provider || 'email',
+        u.created_at ? new Date(u.created_at).toLocaleDateString('fr-FR') : ''
+      ]);
+      const csv = [headers, ...rows].map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'icp-membres.csv'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // ── Refresh ───────────────────────────────────────────────
+    document.getElementById('refresh-btn')?.addEventListener('click', loadUsers);
+
+    // ── Logout ────────────────────────────────────────────────
+    document.getElementById('logout-btn')?.addEventListener('click', async () => {
+      if (sb) await sb.auth.signOut();
+      window.location.href = 'login.html';
+    });
+
+    // ── Demo mode (Supabase non configuré) ────────────────────
+    function showDemo() {
+      document.getElementById('admin-email').textContent = 'mode démo';
+      const demoUsers = [
+        { full_name: 'Sarah Martin', email: 'sarah@example.com', email_confirmed_at: '2026-01-10', provider: 'google', created_at: '2026-01-10T10:00:00Z', last_sign_in_at: '2026-02-20T14:00:00Z' },
+        { full_name: 'Léa Dupont', email: 'lea@example.com', email_confirmed_at: '2026-01-15', provider: 'email', created_at: '2026-01-15T09:00:00Z', last_sign_in_at: '2026-02-18T11:00:00Z' },
+        { full_name: 'Amina Koné', email: 'amina@example.com', email_confirmed_at: null, provider: 'email', created_at: '2026-02-22T16:00:00Z', last_sign_in_at: null },
+        { full_name: 'Julie Roux', email: 'julie@example.com', email_confirmed_at: '2026-02-25', provider: 'apple', created_at: '2026-02-25T08:00:00Z', last_sign_in_at: '2026-02-28T09:00:00Z' },
+      ];
+      renderUsers(demoUsers);
+      const warning = document.createElement('div');
+      warning.style.cssText = 'background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);border-radius:12px;padding:12px 16px;font-size:13px;color:#92400e;font-weight:600;margin-bottom:0;';
+      warning.innerHTML = '⚠️ Mode démo — configure <code>supabase-config.js</code> pour voir les vrais membres.';
+      document.querySelector('.admin-main').insertBefore(warning, document.querySelector('.admin-stats'));
+    }
+
+    // ── Init ──────────────────────────────────────────────────
+    checkAdmin();
+
+  })();
+  </script>
+</body>
+</html>
