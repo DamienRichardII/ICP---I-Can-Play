@@ -447,6 +447,7 @@ a{ color: inherit; }
   display:grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
+  align-items: start;
 }
 
 .col h3{
@@ -463,6 +464,7 @@ a{ color: inherit; }
   display:grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+  align-items: stretch;
 }
 
 .mini-card{
@@ -475,14 +477,7 @@ a{ color: inherit; }
   align-items:flex-start;
   box-shadow: 0 14px 42px rgba(0,0,0,.06);
   height: 100%;
-  min-height: 90px;
-}
-
-.mini-grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  align-items: stretch;
+  box-sizing: border-box;
 }
 
 .mini-ico{
@@ -535,11 +530,16 @@ a{ color: inherit; }
 }
 .strip img{
   width:100%;
-  height: auto;
-  max-height: 300px;
+  height: 320px;
   object-fit: cover;
+  object-position: center center;
   border-radius: 14px;
   display:block;
+}
+.strip img:nth-child(3){
+  object-fit: contain;
+  object-position: center center;
+  background: #f1f1f1;
 }
 
 /* Footer */
@@ -588,7 +588,7 @@ a{ color: inherit; }
 
 @media (max-width: 900px){
   .about-nav{ display:none; }
-  .about-cta{ display:none; }
+  .about-cta{ display:inline-flex; }
   .about-burger{ display:inline-flex; align-items:center; justify-content:center; margin-left:auto; }
   .mobile-drawer{ display:block; }
   .mobile-drawer[aria-hidden="true"]{ display:none; }
@@ -1249,7 +1249,7 @@ a{ color: inherit; }
 /* Responsive */
 @media (max-width: 900px){
   .about-nav{ display:none; }
-  .about-cta{ display:none; }
+  .about-cta{ display:inline-flex; }
   .about-drawer{ display:block; }
   .mobile-drawer[aria-hidden="true"]{ display:none; }
 
@@ -2237,4 +2237,33 @@ input:focus, textarea:focus{ border-color: rgba(0,0,0,.28); }
   background: #f0f0f0;
   transform: translateY(-1px);
   box-shadow: 0 14px 40px rgba(0,0,0,.4);
+}
+
+/* Force equal height on all 4 mini-cards */
+.two-col .mini-grid {
+  grid-template-rows: 1fr;
+}
+.two-col .mini-card {
+  min-height: 100px;
+}
+/* Align the two columns at the same row level */
+.two-col > div {
+  display: flex;
+  flex-direction: column;
+}
+.two-col .mini-title {
+  margin-bottom: 12px;
+}
+
+/* ========================================
+   MOBILE NAV — règle finale prioritaire
+   LOGIN toujours visible sur toutes pages
+======================================== */
+@media (max-width: 900px) {
+  .about-nav  { display: none !important; }
+  .about-cta  { display: inline-flex !important; }
+  .about-burger { display: inline-flex !important; align-items:center; justify-content:center; margin-left: auto; }
+  .mobile-drawer[aria-hidden="true"] { display: none !important; }
+  .mobile-drawer[aria-hidden="false"],
+  .mobile-drawer.is-open { display: block !important; }
 }
