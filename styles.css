@@ -2629,3 +2629,20 @@ a, a:visited { text-decoration: none; color: inherit; }
 }
 /* Burger fix for 1-span icon (override legacy 3-span styles) */
 .header .burger span{ margin:0 !important; }
+/* LOGIN button text always white */
+.btn--dark,
+.btn--dark:visited,
+.btn--dark:hover,
+.btn--dark:active{
+  color:#fff !important;
+}
+/* Anti "left cut" iOS: prevent any horizontal scroll */
+html, body { overflow-x: hidden !important; }
+.projects-page { overflow-x: hidden !important; }
+.card { overflow-x: hidden !important; }
+
+/* Ensure sections never start with negative offset */
+.section, .section-360 { padding-left: 18px; padding-right: 18px; }
+@media (max-width: 520px){
+  .section, .section-360 { padding-left: 14px; padding-right: 14px; }
+}
