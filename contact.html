@@ -17,32 +17,37 @@
     <div class="contact-card">
 
       <!-- Header (same DNA as About) -->
-      <header class="about-header" id="top">
-        <a class="about-brand" href="index.html" aria-label="Retour accueil">
-          <img src="assets/icp-logo.jpg" alt="ICP" class="about-logo">
-        </a>
+      <header class="header" id="top">
+  <div class="wrap header__inner">
+    <a class="brand" href="index.html" aria-label="ICP - Accueil">
+      <span class="brand__logo">
+        <img src="assets/icp-logo.jpg" alt="ICP logo" />
+      </span>
+    </a>
 
-        <nav class="about-nav" aria-label="Navigation">
-          <a href="about.html" class="nav-link">ABOUT</a>
-          <a href="projects.html" class="nav-link">NOS PROJETS</a>
-          <a href="contact.html" class="nav-link is-active">NOUS CONTACTER</a>
-        </nav>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="about.html">About</a>
+      <a href="projects.html">Nos projets</a>
+      <a href="contact.html">Nous contacter</a>
+    </nav>
 
-        <a class="about-cta" href="login.html" aria-label="Se connecter">LOGIN</a>
+    <div class="header__right">
+      <a class="btn btn--dark" href="login.html">Login</a>
+      <button class="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" id="burgerBtn">
+        <span></span>
+      </button>
+    </div>
+  </div>
 
-        <button class="burger about-burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-
-        <div class="about-drawer mobile-drawer" aria-hidden="true">
-          <div class="mobile-links">
-            <a href="about.html">ABOUT</a>
-            <a href="projects.html">NOS PROJETS</a>
-            <a href="contact.html">NOUS CONTACTER</a>
-            <a href="login.html">LOGIN</a>
-          </div>
-        </div>
-      </header>
+  <div class="mobilePanel" id="mobilePanel">
+    <div class="wrap">
+      <a href="about.html">About</a>
+      <a href="projects.html">Nos projets</a>
+      <a href="contact.html">Nous contacter</a>
+      <a href="login.html">Login</a>
+    </div>
+  </div>
+</header>
 
       <!-- SERVICES -->
       <section class="services-hero">

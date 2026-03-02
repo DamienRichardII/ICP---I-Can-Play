@@ -544,54 +544,63 @@
     });
 
     // ── SIGNUP ─────────────────────────────────────────────────
-    document.getElementById('form-signup')?.addEventListener('submit', async e => {
-      e.preventDefault();
-      if (!sb) { showAlert('signup-alert', '⚠️ Supabase non configuré. Remplis supabase-config.js', 'error'); return; }
-      const firstname = document.getElementById('signup-firstname').value.trim();
-      const lastname  = document.getElementById('signup-lastname').value.trim();
-      const email     = document.getElementById('signup-email').value.trim();
-      const password  = document.getElementById('signup-password').value;
-      const confirm   = document.getElementById('signup-confirm').value;
-      const cgu       = document.getElementById('signup-cgu').checked;
+document.getElementById('form-signup')?.addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!sb) { showAlert('signup-alert', '⚠️ Supabase non configuré. Remplis supabase-config.js', 'error'); return; }
 
-      hideAlert('signup-alert');
+  const firstname = document.getElementById('signup-firstname').value.trim();
+  const lastname  = document.getElementById('signup-lastname').value.trim();
+  const email     = document.getElementById('signup-email').value.trim();
+  const password  = document.getElementById('signup-password').value;
+  const confirm   = document.getElementById('signup-confirm').value;
+  const cgu       = document.getElementById('signup-cgu').checked;
 
-      if (!firstname || !lastname) { showAlert('signup-alert', '❌ Prénom et nom requis.', 'error'); return; }
-      if (password.length < 8) { showAlert('signup-alert', '❌ Le mot de passe doit faire au moins 8 caractères.', 'error'); return; }
-      if (password !== confirm)  { showAlert('signup-alert', '❌ Les mots de passe ne correspondent pas.', 'error'); return; }
-      if (!cgu) { showAlert('signup-alert', '❌ Vous devez accepter les CGU.', 'error'); return; }
+  hideAlert('signup-alert');
 
-      setLoading('signup-btn', true);
-      const { error } = await sb.auth.signUp({
-        email, password,
-        options: {
-          data: { first_name: firstname, last_name: lastname, full_name: firstname + ' ' + lastname }
-        }
-      });
-      setLoading('signup-btn', false);
-      if (error) {
-        showAlert('signup-alert', '❌ ' + error.message, 'error');
-      } else {
-        showAlert('signup-alert', '✅ Compte créé ! Vérifiez votre email pour confirmer.', 'success');
-        document.getElementById('form-signup').reset();
-      }
-    });
+  if (!firstname || !lastname) { showAlert('signup-alert', '❌ Prénom et nom requis.', 'error'); return; }
+  if (password.length < 8) { showAlert('signup-alert', '❌ Le mot de passe doit faire au moins 8 caractères.', 'error'); return; }
+  if (password !== confirm)  { showAlert('signup-alert', '❌ Les mots de passe ne correspondent pas.', 'error'); return; }
+  if (!cgu) { showAlert('signup-alert', '❌ Vous devez accepter les CGU.', 'error'); return; }
 
-    // ── FORGOT PASSWORD ────────────────────────────────────────
-    document.getElementById('forgot-link')?.addEventListener('click', async e => {
-      e.preventDefault();
-      if (!sb) { alert('Supabase non configuré.'); return; }
-      const email = document.getElementById('login-email').value.trim();
-      if (!email) { showAlert('login-alert', '❌ Saisissez votre email pour réinitialiser.', 'error'); return; }
-      const { error } = await sb.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + '/login.html'
-      });
-      if (error) {
-        showAlert('login-alert', '❌ ' + error.message, 'error');
-      } else {
-        showAlert('login-alert', '✅ Email de réinitialisation envoyé !', 'success');
-      }
-    });
+  const baseUrl = window.location.origin;
+
+  setLoading('signup-btn', true);
+  const { error } = await sb.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { first_name: firstname, last_name: lastname, full_name: firstname + ' ' + lastname },
+      emailRedirectTo: baseUrl + '/confirm.html'
+    }
+  });
+  setLoading('signup-btn', false);
+
+  if (error) {
+    showAlert('signup-alert', '❌ ' + error.message, 'error');
+  } else {
+    showAlert('signup-alert', '✅ Compte créé ! Vérifiez votre email pour confirmer.', 'success');
+    document.getElementById('form-signup').reset();
+  }
+});
+
+// ── FORGOT PASSWORD ────────────────────────────────────────
+document.getElementById('forgot-link')?.addEventListener('click', async e => {
+  e.preventDefault();
+  if (!sb) { alert('Supabase non configuré.'); return; }
+
+  const email = document.getElementById('login-email').value.trim();
+  if (!email) { showAlert('login-alert', '❌ Saisissez votre email pour réinitialiser.', 'error'); return; }
+
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + '/login.html'
+  });
+
+  if (error) {
+    showAlert('login-alert', '❌ ' + error.message, 'error');
+  } else {
+    showAlert('login-alert', '✅ Email de réinitialisation envoyé !', 'success');
+  }
+});
 
     // ── GOOGLE OAuth ────────────────────────────────────────────
     async function signInWithGoogle() {

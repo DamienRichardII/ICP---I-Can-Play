@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ICP — Confirmation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body style="background:#0a0a0a;color:#fff;font-family:Inter,system-ui,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;">
+  <div style="text-align:center;max-width:560px;padding:28px;">
+    <h1 style="margin:0 0 10px;font-weight:900;">Confirmation en cours…</h1>
+    <p style="margin:0;opacity:.75;">On finalise la création de votre compte.</p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    (async () => {
+      const { createClient } = supabase;
+      const sb = createClient(window.__SUPABASE_URL, window.__SUPABASE_ANON_KEY);
+
+      // Absorbe le callback (code/tokens) et installe la session si possible
+      const { data, error } = await sb.auth.getSession();
+
+      // Si pas de session directe, c'est OK: l'email est confirmé,
+      // l'utilisateur pourra se connecter ensuite avec son mot de passe.
+      if (error) {
+        window.location.href = "login.html?confirm=error";
+        return;
+      }
+
+      if (data?.session) {
+        window.location.href = "dashboard.html";
+      } else {
+        window.location.href = "login.html?confirmed=1";
+      }
+    })();
+  </script>
+</body>
+</html>

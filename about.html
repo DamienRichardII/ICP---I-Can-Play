@@ -17,26 +17,36 @@
 <main class="about-wrap">
 <div class="about-card">
 <!-- Header (mockup) -->
-<header class="about-header" id="top">
-<a aria-label="Retour accueil" class="about-brand" href="index.html">
-<img alt="ICP" class="about-logo" src="assets/icp-logo.jpg"/>
-</a>
-<nav aria-label="Navigation" class="about-nav">
-<a class="nav-link is-active" href="about.html">ABOUT</a>
-<a class="nav-link" href="projects.html">NOS PROJETS</a>
-<a class="nav-link" href="contact.html">NOUS CONTACTER</a>
-</nav>
-<a aria-label="Se connecter" class="about-cta" href="login.html">LOGIN</a>
-<button class="about-burger burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false">
-  <span></span><span></span><span></span>
-</button>
-<div aria-hidden="true" class="about-drawer mobile-drawer">
-<div class="mobile-links">
-<a href="about.html">ABOUT</a>
-<a href="projects.html">NOS PROJETS</a>
-<a href="contact.html">NOUS CONTACTER</a>
-</div>
-</div>
+<header class="header" id="top">
+  <div class="wrap header__inner">
+    <a class="brand" href="index.html" aria-label="ICP - Accueil">
+      <span class="brand__logo">
+        <img src="assets/icp-logo.jpg" alt="ICP logo" />
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="about.html">About</a>
+      <a href="projects.html">Nos projets</a>
+      <a href="contact.html">Nous contacter</a>
+    </nav>
+
+    <div class="header__right">
+      <a class="btn btn--dark" href="login.html">Login</a>
+      <button class="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" id="burgerBtn">
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobilePanel" id="mobilePanel">
+    <div class="wrap">
+      <a href="about.html">About</a>
+      <a href="projects.html">Nos projets</a>
+      <a href="contact.html">Nous contacter</a>
+      <a href="login.html">Login</a>
+    </div>
+  </div>
 </header>
 <!-- Ticker top -->
 <div aria-label="Valeurs ICP" class="ticker ticker-dark">
