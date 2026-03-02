@@ -2621,7 +2621,9 @@ a, a:visited { text-decoration: none; color: inherit; }
   .brand{ min-width:auto; }
 }
 /* FORCE PREMIUM HEADER (LAST OVERRIDE) */
-.header a, .header a:visited{ text-decoration:none !important; color:inherit !important; }
+.header a, .header a:visited{ text-decoration:none !important; }
+/* color:inherit only for non-dark buttons */
+.header a:not(.btn--dark), .header a:visited:not(.btn--dark){ color:inherit !important; }
 @media (max-width:860px){
   .header .nav{ display:none !important; }
   .header .burger{ display:flex !important; }
@@ -2629,11 +2631,26 @@ a, a:visited { text-decoration: none; color: inherit; }
 }
 /* Burger fix for 1-span icon (override legacy 3-span styles) */
 .header .burger span{ margin:0 !important; }
-/* LOGIN button text always white */
+/* LOGIN button + all dark buttons always white text */
 .btn--dark,
 .btn--dark:visited,
 .btn--dark:hover,
-.btn--dark:active{
+.btn--dark:active,
+a.btn--dark,
+a.btn--dark:visited,
+a.btn--dark:hover,
+a.btn--dark:active{
+  color:#fff !important;
+}
+/* pill-dark (e.g. "Nous contacter" in section 360) always white text */
+.pill-dark,
+.pill-dark:visited,
+.pill-dark:hover,
+.pill-dark:active,
+a.pill-dark,
+a.pill-dark:visited,
+a.pill-dark:hover,
+a.pill-dark:active{
   color:#fff !important;
 }
 /* Anti "left cut" iOS: prevent any horizontal scroll */
