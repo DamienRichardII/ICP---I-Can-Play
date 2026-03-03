@@ -538,9 +538,14 @@
         const msg = error.message.includes('Invalid') ? 'Email ou mot de passe incorrect.' : error.message;
         showAlert('login-alert', '❌ ' + msg, 'error');
       } else {
-        showAlert('login-alert', '✅ Connexion réussie ! Redirection...', 'success');
-        setTimeout(() => window.location.href = 'dashboard.html', 1200);
-      }
+  const { data: sessionData } = await sb.auth.getSession();
+  const userEmail = sessionData?.session?.user?.email;
+  const ADMIN_EMAILS = ['contact@icanplayfr.com'];
+  showAlert('login-alert', '✅ Connexion réussie ! Redirection...', 'success');
+  setTimeout(() => {
+    window.location.href = ADMIN_EMAILS.includes(userEmail) ? 'admin.html' : 'dashboard.html';
+  }, 1200);
+}
     });
 
     // ── SIGNUP ─────────────────────────────────────────────────
